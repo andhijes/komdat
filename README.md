@@ -64,6 +64,34 @@ $ sudo mv ../pagekit/ /var/www/html/
 	- Konfigurasi Database
 	- Pengaturan Informasi Situs
 	- Selesai! (Tampilan halaman *admin*)
+
+## Konfigurasi
+[`^ kembali ke atas ^`](#aplikasi-web-pagekit)
+Pastikan pada konfigurasi Apache, module ``` mod_rewrite ``` sudah dalam keadaan diaktifkan. Untuk melihat module mana yang sudah aktif, ketikkan perintah ``` apache2ctl -M ```. Jika belum ada di list, ketikkan perintah ``` sudo a2enmod rewrite ``` pada terminal kemudian restart apache dengan mengetikkan perintah ``` sudo service apache2 restart ```.
+
+Selanjutnya, cek juga file konfigurasi apache2.conf yang terletak di ``` /etc/apache2/ ```.
+```
+$ cat /etc/apache2/apache2.conf
+....
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+</Directory>
+....
+```
+Jika pengaturan AllowOverride pada direktori /var/www masih None, ubah menjadi All agar ``` mod_rewrite ``` bisa dijalankan dengan sepenuhnya.
+```
+$ sudo nano /etc/apache2/apache2.conf
+....
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride All
+	Require all granted
+</Directory>
+....
+```
+Kemudian simpan (ctrl+o) dan keluar (ctrl+x)
 	
 ## Maintenance
 [`^ kembali ke atas ^`](#aplikasi-web-pagekit)
@@ -139,34 +167,34 @@ PageKit menyediakan fitur *maintenance* apabila admin web ingin melakukan perbai
 [`^ kembali ke atas ^`](#aplikasi-web-pagekit)
 
 Aplikasi web PageKit merupakan CMS yang bisa dikatakan baru, namun memiliki beberapa fitur yang diunggulkan, di antaranya:
-1. Dibangun menggunakan *framework* PHP Symfony dan Vue.js
-2. Tampilan yang modern dan *responsive*, namun tetap terlihat sederhana
-3. Proses instalasi dan konfigurasi yang sangat mudah dan serba otomatis
-4. Terdapat editor teks berupa Markdown dan HTML
-5. Terdapat *file manager* untuk mengatur *file* apa saja yang diunggah ke server
-6. Personalisasi dan pengaturan halaman situs yang tidak rumit
-7. Pengaturan kontrol *cache*
+1. Tampilan yang terlihat sederhana, namun tetap modern dan sangat *responsive*
+2. Dibuat menggunakan *framework* Vue.js dan PHP Symfony 
+3. Proses instalasi dan konfigurasi yang mudah dan serba otomatis
+4. Terdapat *file manager* yang berfungsi mengatur *file* apa saja yang diunggah ke server
+5. Terdapat editor teks berupa HTML dan Markdown
+6. Terdapat Pengaturan kontrol *cache*
+7. Personalisasi dan pengaturan halaman situs yang tidak rumit
 
-Namun, dari keunggulan yang diberikan, masih terdapat beberapa kekurangan, di antaranya:
-1. Variasi tema dan ekstensi (*plugin*) yang diberikan masih terbilang sedikit, selain itu hanya bisa menggunakan tema yang disediakan, tidak dapat dikustomisasi atau dibuat sendiri.
-2. Walaupun terbilang mudah, tidak seperti wordpress yang memiliki *live preview*, untuk mengatur tata letak *widget* yang akan ditampilkan di situs masih menggunakan menu *dropdown*.
+Namun dibalik beberapa keunggulan PageKit di atas, masih terdapat beberapa kekurangan, di antaranya:
+1. Walaupun dapat dikatakan penggunaanya mudah, tapi untuk mengatur tata letak *widget* yang akan ditampilkan di situs masih menggunakan menu *dropdown*. Tidak seperti wordpress yang memiliki *live preview*. 
+2. Variasi tema dan ekstensi (*plugin*) yang diberikan juga masih sedikit, selain itu kita tidak dapat membuat tema sendiri(kustomisasi) dan hanya dapat menggunakan tema yang disediakan.
 
-### Perbandingan dengan aplikasi web 'Subrion'
-Sama halnya dengan PageKit, Subrion merupakan CMS yang digunakan untuk mempermudah pengguna membangun situs web. Dengan berbagai macam fitur yang ditawarkan, terdapat beberapa kesamaan, di antaranya:
-1. Subrion dapat digunakan untuk membuat situs blog
-2. Memiliki *user management* lengkap dengan *permission* sesuai *role*-nya
-3. Kustomisasi halaman (membuat baru, menghapus, mengubah status (aktif/inaktif/draft))
-4. Terdapat *storage management* untuk mengatur *file-file* yang terunggah ke server
+### Perbandingan aplikasi PageKit dengan aplikasi web 'Subrion'
+Subrion merupakan CMS yang dapat digunakan mempermudah user dalam membangun situs web. Dengan berbagai macam fitur yang ditawarkan, terdapat beberapa kesamaan dengan aplikasi PageKit, di antaranya:
+1. Aplikasi subrion digunakan untuk membuat situs blog.
+2. Terdapat *storage management* untuk mengatur *file-file* yang terunggah ke server.
+3. Kustomisasi halaman (membuat baru, menghapus, mengubah status (aktif/inaktif/draft)).
+4. Memiliki *user management* lengkap dengan *permission* sesuai *role*-nya.
 
 Namun ada beberapa hal yang perlu diperhatikan sebagai ciri pembeda.
-1. Halaman *admin* PageKit memiliki tampilan sederhana (tidak banyak *content* yang ditampilkan dalam suatu halaman, sedangkan Subrion terkesan menampilkan banyak *content*
-2. Terdapat fitur unik di Subrion, yaitu adanya fitur *SQL Tools*, tanpa perlu membuka *phpMyAdmin* kita dapat melihat isi *database*-nya
-3. Subrion juga dilengkapi dengan fitur keamanan di antaranya HTTPS, anti-CSRF, Build-in Captcha), sedangkan PageKit hanya pengaturan HTTPS saja yang ada
+1. Pada PageKit Halaman *admin* memiliki tampilan yang sederhana (tidak banyak *content* yang ditampilkan dalam suatu halaman), sedangkan Subrion menampilkan banyak *content*.
+2. Pada PageKit hanya terdapat pengaturan HTTPS saja, sedangkan Subrion dilengkapi dengan fitur keamanan di antaranya HTTPS, anti-CSRF, Build-in Captcha).
+3. Pada subrion juga rerdapat fitur unik, yaitu adanya fitur *SQL Tools*, tanpa perlu membuka *phpMyAdmin* kita dapat melihat isi *database*-nya
 
 ## Referensi
 [`^ kembali ke atas ^`](#aplikasi-web-pagekit)
 
 1. [About | PageKit](https://pagekit.com/about) - PageKit
-2. [How To Rewrite URLs with mod_rewrite for Apache on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04) - DigitalOcean
-3. [Installation | PageKit](https://pagekit.com/docs/getting-started/installation) - PageKit
-3. [CLI | Pagekit](https://pagekit.com/docs/developer/cli) - PageKit
+2. [CLI | Pagekit](https://pagekit.com/docs/developer/cli) - PageKit
+3. [How To Rewrite URLs with mod_rewrite for Apache on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04) - DigitalOcean
+4. [Installation | PageKit](https://pagekit.com/docs/getting-started/installation) - PageKit
